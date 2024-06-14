@@ -47,8 +47,27 @@ namespace TechJobsConsoleAutograded6
             // load data, if not already loaded
             LoadData();
 
-            return null;
-        }
+        List <Dictionary <string, string>> jobs = new List<Dictionary<string, string>> ();
+      
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+               foreach (KeyValuePair<string, string> kvp in job)
+               {
+                   string aValue = kvp.Value;
+                   if (aValue.ToLower().Contains(value.ToLower()))
+                   {
+                       if (!jobs.Contains(job))
+                       {
+                           jobs.Add(job);
+                           
+                       }
+                   }
+               }
+            }
+           return jobs;
+       }
+
+        
 
         /**
          * Returns results of search the jobs data by key/value, using
@@ -70,7 +89,7 @@ namespace TechJobsConsoleAutograded6
 
 
                 //TODO: Make search case-insensitive
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
@@ -97,10 +116,10 @@ namespace TechJobsConsoleAutograded6
                 while (reader.Peek() >= 0)
                 {
                     string line = reader.ReadLine();
-                    string[] rowArrray = CSVRowToStringArray(line);
-                    if (rowArrray.Length > 0)
+                    string[] rowArray = CSVRowToStringArray(line);
+                    if (rowArray.Length > 0)
                     {
-                        rows.Add(rowArrray);
+                        rows.Add(rowArray);
                     }
                 }
             }
@@ -159,6 +178,5 @@ namespace TechJobsConsoleAutograded6
 
             return rowValues.ToArray();
         }
-    }
 }
-
+}
